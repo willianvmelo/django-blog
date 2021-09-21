@@ -3,7 +3,15 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(status='published')
+
+
 class Post(models.Model):
+    objects = models.Manager()
+    published = PublishedManager()
+
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published'),
@@ -16,7 +24,7 @@ class Post(models.Model):
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     create = models.DateTimeField(auto_now_add=True)
-    publish = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default='draft')
 
