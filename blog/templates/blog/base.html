@@ -6,22 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap core CSS -->
-  <link href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
-  <link href="{%static 'sidebar/sidebar.css'%}" rel="stylesheet">
+    <link
+      href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}"
+      rel="stylesheet"
+    />
+    <link href="{%static 'sidebar/sidebar.css'%}" rel="stylesheet" />
     <title>{% block title%}{%endblock%}</title>
   </head>
   <body>
     {% include 'parciais/_sidebar.html' %}
-    
+
     <div id="content">
-    
-    {% include 'parciais/_header.html' %}
-    
-    {% block content %} {% endblock %}
-    
+      {% include 'parciais/_header.html' %} {% block content %} {% endblock %}
     </div>
 
-    
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'vendor/jquery/jquery.slim.min.js'%}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
