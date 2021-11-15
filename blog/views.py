@@ -52,7 +52,10 @@ def post_detail(request, year, month, day, post):
 
         })        
                              
-    return render(request, 'blog/post/detail.html', {'post': post})
+    return render(request, 'blog/post/detail.html', {'post': post,
+                                                     'comments': comments,
+                                                     'new_comment': new_comment,
+                                                     'comment_form': comment_form})
 
 # View para compartilhamento de posts via email
 
