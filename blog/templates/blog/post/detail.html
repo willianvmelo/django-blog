@@ -13,10 +13,10 @@
                     <!-- Post title-->
                     <h1 class="fw-bolder mb-1">{{post.title}}</h1>
                     <!-- Post meta content-->
-                    <div class="text-muted fst-italic mb-2">Posted on {{post.publish.month}}/{{post.publish.day}}/{{post.publish.year}} by {{post.author}}</div>
+                    <div class="text-muted fst-italic mb-2">Publicado em {{post.publish.month}}/{{post.publish.day}}/{{post.publish.year}} por {{post.author}}</div>
                     <!-- Post categories-->
                     {% for tag in post.tags.all %}
-                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{tag}}</a>
+                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'blog:post_list_by_tag' tag.slug %}">{{tag}}</a>
 
                     {% endfor %}
                     
@@ -52,19 +52,19 @@
                 </div>
                         {% with comments.count as total_comments %}
                             <h2>
-                                {{ total_comments }} comment{{ total_comments|pluralize }}
+                                {{ total_comments }} comentário{{ total_comments|pluralize }}
                             </h2>
                         {% endwith %}
 
                         <!-- Comment form-->
                         {% if new_comment %}
-                            <h2>Your comment has been added.</h2>
+                            <h2>Seu comentário foi adicionado.</h2>
                         {% else %}
-                            <h2>Add a new comment</h2>
+                            <h2>Fazer um novo comentário.</h2>
                             <form class="mb-4" method = "post">
                                 {{ comment_form.as_p }}
                                 {% csrf_token %}
-                                <input type="submit" value="Add comment">
+                                <input type="submit" value="Comentar">
                             </form>
                         {% endif %}   
             </section>

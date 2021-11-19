@@ -4,13 +4,35 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from .forms import EmailPostForm,CommentForm
 from django.core.mail import message, send_mail
+from taggit.models import Tag
 
-class PostListView(ListView):
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by= 2
-    template_name = 'blog/post/list.html'
 
+def post_list(request,tag_slug = None):
+    
+    object_list = Post.published.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag,slug = tag_slug)
+        object_list = object_list.filter(tags__in = [tag])
+
+    paginator = Paginator(object_list, 4)  # 4 posts por página
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # Se a página não for um inteiro entrega a primeira página
+        posts = paginator.page(1)
+    except EmptyPage:
+        # Se a página estiver vazia entrega a última página
+        posts = paginator.page(paginator.num_pages)
+
+    return render(request,
+                'blog/post/list.html',
+                {'page': page,
+                'posts': posts,
+                'tag' : tag})
 
 
 
